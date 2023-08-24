@@ -1,6 +1,7 @@
 import Appointment from "../models/Appointment.js";
 import asyncHandler from '../utils/asyncHandler.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
+
 import moment from 'moment';
 
 export const getAppointments = asyncHandler(async (req, res, next) => {

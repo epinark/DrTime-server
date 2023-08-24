@@ -19,7 +19,6 @@ const doctorSchema = new Schema({
         postalCode: String,
     },
     timings: [{
-        day: String,
         startTime: String,
         endTime: String,
         interval: Number

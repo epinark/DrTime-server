@@ -1,5 +1,6 @@
 import Doctor from "../models/Doctor.js";
 import asyncHandler from '../utils/asyncHandler.js';
+import ErrorResponse from '../utils/ErrorResponse.js';
 
 export const getOneDoctor = asyncHandler(async (req, res) => {
     const {

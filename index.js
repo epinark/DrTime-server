@@ -4,7 +4,7 @@ import cors from "cors";
 import errorHandler from "./middleware/errorHandler.js";
 import dotenv from 'dotenv';
 
-import userRouter from './routes/userRouter.js';
+// import userRouter from './routes/userRouter.js';
 import userProfileRouter from './routes/userProfileRouter.js';
 import appointmentRouter from './routes/appointmentRouter.js';
 import doctorRouter from './routes/doctorRouter.js'
@@ -18,7 +18,7 @@ app.use(cors({
     origin: '*'
 }));
 
-app.use('/users', userRouter);
+// app.use('/users', userRouter);
 app.use('/appointments', appointmentRouter);
 app.use('/doctors', doctorRouter);
 app.use('/profiles', userProfileRouter)

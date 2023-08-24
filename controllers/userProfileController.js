@@ -1,7 +1,6 @@
 import UserProfile from '../models/UserProfile.js';
-import ErrorResponse from '../utils/ErrorResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
-
+import ErrorResponse from '../utils/ErrorResponse.js';
 export const createUserProfile = asyncHandler(async (req, res, next) => {
     const {
         gender,
