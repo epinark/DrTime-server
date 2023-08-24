@@ -1,5 +1,4 @@
 import Appointment from "../models/Appointment.js";
-import UserProfile from "../models/UserProfile.js";
 import asyncHandler from '../utils/asyncHandler.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
 import moment from 'moment';
@@ -27,11 +26,7 @@ export const getAppointment = asyncHandler(async (req, res, next) => {
 
     if (!appointment)
         throw new ErrorResponse(`Appointment with id of ${id} doesn't exist`, 404);
-    const formattedAppointment = {
-        ...appointment.toObject(),
-        Appointmentdate: appointment.Appointmentdate.toISOString(),
-    };
-    res.send(formattedAppointment);
+    res.send(appointment);
 });
 
 export const createAppointment = asyncHandler(async (req, res, next) => {
