@@ -5,7 +5,7 @@ import {
 import {
     getOneDoctor,
     getAllDoctors,
-    createDoctor
+    createDoctor,
 } from "../controllers/doctorController.js"
 
 const doctorRouter = Router();

@@ -1,17 +1,25 @@
+import User from '../models/User.js';
+import Doctor from '../models/Doctor.js';
 import Appointment from "../models/Appointment.js";
-import asyncHandler from '../utils/asyncHandler.js';
+import asyncHandler from '../utils/AsyncHandler.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
 
 import moment from 'moment';
 
 export const getAppointments = asyncHandler(async (req, res, next) => {
     try {
+        console.log('getAppointments function started');
+
         const appointments = await Appointment.find()
             .populate('user', 'firstName lastName')
-            .populate('doctor', 'name specialization');
+            .populate('doctor', 'name')
+            .exec();
+
+        console.log('Appointments retrieved:', appointments);
 
         res.json(appointments);
     } catch (error) {
+        console.error('Error:', error);
         next(error);
     }
 });
@@ -23,7 +31,7 @@ export const getAppointment = asyncHandler(async (req, res, next) => {
 
     const appointment = await Appointment.findById(id)
         .populate('user', 'firstName lastName')
-        .populate('doctor', 'name specialization');
+        .populate('doctor', 'name');
 
     if (!appointment)
         throw new ErrorResponse(`Appointment with id of ${id} doesn't exist`, 404);
