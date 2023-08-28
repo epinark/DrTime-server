@@ -7,7 +7,8 @@ import dotenv from 'dotenv';
 // import userRouter from './routes/userRouter.js';
 import userProfileRouter from './routes/userProfileRouter.js';
 import appointmentRouter from './routes/appointmentRouter.js';
-import doctorRouter from './routes/doctorRouter.js'
+import doctorRouter from './routes/doctorRouter.js';
+import authRouter from "./routes/authRouter.js"
 
 dotenv.config();
 
@@ -21,7 +22,8 @@ app.use(cors({
 // app.use('/users', userRouter);
 app.use('/appointments', appointmentRouter);
 app.use('/doctors', doctorRouter);
-app.use('/profiles', userProfileRouter)
+app.use('/profiles', userProfileRouter);
+app.use('/auth', authRouter);
 app.use(errorHandler);
 const port = process.env.PORT || 8080;
 

@@ -31,7 +31,7 @@ export const getAppointment = asyncHandler(async (req, res, next) => {
 
     const appointment = await Appointment.findById(id)
         .populate('user', 'firstName lastName')
-        .populate('doctor', 'name');
+        .populate('doctor', 'name').exec();
 
     if (!appointment)
         throw new ErrorResponse(`Appointment with id of ${id} doesn't exist`, 404);
