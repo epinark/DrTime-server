@@ -50,10 +50,6 @@ const userSchema = new Schema({
     },
 
     profilePhoto: String,
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
 });
 
 export default model('User', userSchema);
