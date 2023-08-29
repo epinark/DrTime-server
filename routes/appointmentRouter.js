@@ -3,7 +3,6 @@ import {
 } from 'express';
 
 import {
-    changeAppointment,
     createAppointment,
     getAppointments,
     getAppointment,
@@ -19,7 +18,7 @@ const appointmentRouter = Router();
 
 appointmentRouter.route('/').get(getAppointments).post(protect, createAppointment);
 
-appointmentRouter.route('/:id').get(getAppointment).put(protect, changeAppointment).delete(protect, deleteAppointment);
+appointmentRouter.route('/:id').get(getAppointment).delete(protect, deleteAppointment);
 
 
 export default appointmentRouter;

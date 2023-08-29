@@ -50,3 +50,74 @@ export const signIn = asyncHandler(async (req, res) => {
         token
     });
 });
+
+
+export const getUser = asyncHandler(async (req, res) => {
+    const {
+        userId
+    } = req;
+    const user = await User.findById(userId);
+    res.status(201).json(user);
+});
+
+export const updateUser = asyncHandler(async (req, res, next) => {
+    const {
+        body,
+        params: {
+            id
+        },
+    } = req;
+
+    const updatedUser = await User.findByIdAndUpdate(id, body, {
+        new: true,
+        runValidators: true,
+    });
+
+    if (!updatedUser)
+        throw new ErrorResponse(`User profile with id of ${id} doesn't exist`, 404);
+
+    res.json(updatedUser);
+});
+export const createPrimaryDoctor = asyncHandler(async (req, res, next) => {
+    const {
+        userId,
+        doctorId
+    } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new ErrorResponse('User not found', 404);
+    }
+
+    user.primaryDoctor = doctorId;
+    await user.save();
+
+    res.status(200).json({
+        message: "Primary doctor assigned successfully."
+    });
+});
+
+
+export const updatePrimaryDoctor = asyncHandler(async (req, res, next) => {
+    const {
+        userId,
+        doctorId
+    } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            throw new ErrorResponse('User not found', 404);
+        }
+
+        user.primaryDoctor = doctorId;
+        await user.save();
+
+        res.status(200).json({
+            message: "Primary Doctor updated successfully."
+        });
+    } catch (error) {
+        next(error);
+    }
+});

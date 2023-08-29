@@ -37,51 +37,60 @@ export const getAppointment = asyncHandler(async (req, res, next) => {
         throw new ErrorResponse(`Appointment with id of ${id} doesn't exist`, 404);
     res.send(appointment);
 });
-
 export const createAppointment = asyncHandler(async (req, res, next) => {
-    const {
-        user,
-        doctor,
-        date,
-        time,
-        description
-    } = req.body;
-
-    const appointmentDate = moment(`${date} ${time}`, "YYYY-MM-DD HH:mm");
+    try {
+        const {
+            user,
+            doctor,
+            appointmentdate,
+            description
+        } = req.body;
 
 
-    const newAppointment = await Appointment.create({
-        user,
-        doctor,
-        Appointmentdate: appointmentDate.toDate(),
-        description,
-    });
+        const parsedAppointmentDate = new Date(appointmentdate);
 
-    res.status(201).json(newAppointment);
+
+        if (isNaN(parsedAppointmentDate)) {
+            throw new ErrorResponse("Invalid appointment date", 400);
+        }
+
+
+        const newAppointment = await Appointment.create({
+            user,
+            doctor,
+            appointmentdate: parsedAppointmentDate,
+            description,
+        });
+
+        res.status(201).json(newAppointment);
+    } catch (error) {
+        next(error);
+    }
 });
 
 
-export const changeAppointment = asyncHandler(async (req, res) => {
-    const {
-        id
-    } = req.params;
-    const {
-        userId
-    } = req;
 
-    const found = await Appointment.findById(id);
-    if (!found)
-        throw new ErrorResponse(`Appointment with id of ${id} doesn't exist`, 404);
-    const updatedAppointment = await Appointment.findOneAndUpdate({
-        _id: id
-    }, {
-        ...req.body
-    }, {
-        new: true
-    });
+// export const changeAppointment = asyncHandler(async (req, res) => {
+//     const {
+//         id
+//     } = req.params;
+//     const {
+//         userId
+//     } = req;
 
-    res.json(updatedAppointment);
-});
+//     const found = await Appointment.findById(id);
+//     if (!found)
+//         throw new ErrorResponse(`Appointment with id of ${id} doesn't exist`, 404);
+//     const updatedAppointment = await Appointment.findOneAndUpdate({
+//         _id: id
+//     }, {
+//         ...req.body
+//     }, {
+//         new: true
+//     });
+
+//     res.json(updatedAppointment);
+// });
 
 export const deleteAppointment = asyncHandler(async (req, res, next) => {
     const {
