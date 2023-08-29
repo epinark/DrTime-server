@@ -15,7 +15,7 @@ const appointmentSchema = new Schema({
         type: ObjectId,
         ref: 'Doctor',
     },
-    Appointmentdate: {
+    appointmentdate: {
         type: Date,
         required: [true, 'Date is required'],
     },
