@@ -1,3 +1,4 @@
+// Auth Router
 import {
     Router
 } from 'express';
@@ -18,11 +19,22 @@ import {
     protect
 } from '../middleware/auth.js';
 
-
 const authRouter = Router();
 
+
 authRouter.post('/signup', validateJOI(signupSchema), signUp);
+
+
 authRouter.post('/signin', validateJOI(signinSchema), signIn);
-authRouter.route('/:id').get(getUser).put(protect, updateUser);
-authRouter.route('/primaryDoctor').post(createPrimaryDoctor).put(updatePrimaryDoctor);
+
+authRouter.get('/:id', protect, getUser);
+
+
+authRouter.put('/:id', protect, updateUser);
+
+
+authRouter.route('/primaryDoctor')
+    .post(createPrimaryDoctor)
+    .put(updatePrimaryDoctor);
+
 export default authRouter;
