@@ -1,4 +1,3 @@
-// Auth Router
 import {
     Router
 } from 'express';
@@ -8,29 +7,36 @@ import {
     getUser,
     updateUser,
     createPrimaryDoctor,
-    updatePrimaryDoctor
+    updatePrimaryDoctor,
 } from '../controllers/userController.js';
 import validateJOI from '../middleware/validateJOI.js';
 import {
     signupSchema,
     signinSchema
 } from '../joi/schemas.js';
+
 import {
     protect
 } from '../middleware/auth.js';
 
-const authRouter = Router();
 
+
+
+
+
+const authRouter = Router();
 
 authRouter.post('/signup', validateJOI(signupSchema), signUp);
 
 
 authRouter.post('/signin', validateJOI(signinSchema), signIn);
 
-authRouter.get('/:id', protect, getUser);
+authRouter.get('/me', protect, getUser);
 
 
-authRouter.put('/:id', protect, updateUser);
+authRouter.put('/me', updateUser);
+
+
 
 
 authRouter.route('/primaryDoctor')
