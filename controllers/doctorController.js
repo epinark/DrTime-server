@@ -2,19 +2,26 @@ import Doctor from "../models/Doctor.js";
 import asyncHandler from '../utils/AsyncHandler.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
 
-export const getOneDoctor = asyncHandler(async (req, res) => {
-    const {
-        params: {
+export const getOneDoctor = asyncHandler(async (req, res, next) => {
+    try {
+        const {
             id
-        },
-    } = req;
+        } = req.params;
 
-    const doctor = await Doctor.findById(id);
+        const doctor = await Doctor.findById(id);
 
-    if (!doctor)
-        throw new ErrorResponse(`Doctor with id of ${id} doesn't exist`, 404);
-
-    res.json(doctor);
+        if (!doctor) {
+            return res.status(404).json({
+                message: `Doctor with id of ${id} doesn't exist`
+            });
+        }
+        res.json(doctor);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error fetching doctor',
+            error: error.message,
+        });
+    }
 });
 
 export const getAllDoctors = asyncHandler(async (req, res, next) => {
@@ -43,3 +50,19 @@ export const createDoctor = asyncHandler(async (req, res, next) => {
 
     res.status(201).json(newDoctor);
 });
+export const getDoctorWorkingHours = async (req, res, next) => {
+    try {
+        const {
+            doctorId
+        } = req.params;
+
+
+        const doctor = await Doctor.findById(doctorId);
+
+        const workingHours = doctor.timings;
+
+        res.status(200).json(workingHours);
+    } catch (error) {
+        next(error);
+    }
+};

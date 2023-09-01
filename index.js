@@ -18,7 +18,8 @@ app.use(cors({
     origin: '*'
 }));
 
-// app.use('/users', userRouter);
+
+
 app.use('/appointments', appointmentRouter);
 app.use('/doctors', doctorRouter);
 app.use('/auth', authRouter);
