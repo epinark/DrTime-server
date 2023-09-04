@@ -32,7 +32,7 @@ const userSchema = new Schema({
         type: Date,
     },
     telefon: {
-        type: Number
+        type: Number,
     },
     PLZ: {
         type: Number,
@@ -40,7 +40,7 @@ const userSchema = new Schema({
     city: {
         type: String,
     },
-   
+
     insuranceNumber: String,
     primaryDoctor: {
         type: ObjectId,
