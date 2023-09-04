@@ -10,7 +10,7 @@ import doctorRouter from './routes/doctorRouter.js';
 import authRouter from "./routes/authRouter.js"
 
 dotenv.config();
-import Connection from "./db/dbConnection.js";
+
 
 const app = express();
 app.use(express.json());
