@@ -8,8 +8,7 @@ const {
 
 const userSchema = new Schema({
     gender: {
-        type: String,
-
+        type: String
     },
     firstName: {
         type: String,
@@ -30,17 +29,21 @@ const userSchema = new Schema({
     },
     birthDate: {
         type: Date,
+
     },
     contactInfo: {
         telefon: {
-            type: Number
+            type: Number,
         },
         PLZ: {
             type: Number,
+
         },
         City: {
             type: String,
+
         },
+
     },
     insuranceNumber: String,
     primaryDoctor: {
