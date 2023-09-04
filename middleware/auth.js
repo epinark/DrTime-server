@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import ErrorResponse from '../utils/ErrorResponse.js';
-import asyncHandler from '../utils/AsyncHandler.js';
+import asyncHandler from '../utils/asyncHandler.js';
 
 export const protect = asyncHandler(async (req, res, next) => {
     const bearer = req.headers.authorization;
