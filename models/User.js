@@ -31,20 +31,14 @@ const userSchema = new Schema({
         type: Date,
 
     },
-    contactInfo: {
-        telefon: {
-            type: Number,
-        },
-        PLZ: {
-            type: Number,
-
-        },
-        City: {
-            type: String,
-
-        },
-
+    
+    PLZ: {
+        type: Number,
     },
+    city: {
+        type: String,
+    },
+
     insuranceNumber: String,
     primaryDoctor: {
         type: ObjectId,
