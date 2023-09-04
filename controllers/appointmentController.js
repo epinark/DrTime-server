@@ -1,7 +1,7 @@
 import User from '../models/User.js';
 import Doctor from '../models/Doctor.js';
 import Appointment from "../models/Appointment.js";
-import asyncHandler from '../utils/AsyncHandler.js';
+import asyncHandler from '../utils/asyncHandler.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
 
 import moment from 'moment';
