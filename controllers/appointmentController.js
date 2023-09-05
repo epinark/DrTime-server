@@ -9,8 +9,13 @@ import moment from 'moment';
 export const getAppointments = asyncHandler(async (req, res, next) => {
     try {
         console.log('getAppointments function started');
+        const {
+            userId
+        } = req.params;
 
-        const appointments = await Appointment.find()
+        const appointments = await Appointment.find({
+                userId: userId
+            })
             .populate('user', 'firstName lastName')
             .populate('doctor', 'name')
             .exec();
@@ -43,17 +48,18 @@ export const createAppointment = asyncHandler(async (req, res, next) => {
             user,
             doctor,
             appointmentdate,
+            appointmenttime,
             description
         } = req.body;
 
-
+        const [hours, minutes] = appointmenttime.split(":");
         const parsedAppointmentDate = new Date(appointmentdate);
-
+        parsedAppointmentDate.setHours(hours);
+        parsedAppointmentDate.setMinutes(minutes);
 
         if (isNaN(parsedAppointmentDate)) {
             throw new ErrorResponse("Invalid appointment date", 400);
         }
-
 
         const newAppointment = await Appointment.create({
             user,
