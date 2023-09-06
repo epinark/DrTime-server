@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
-import asyncHandler from '../utils/AsyncHandler.js';
+import asyncHandler from '../utils/asyncHandler.js';
+import Appointment from "../models/Appointment.js";
 import {
     createJWT,
     hashPassword,
@@ -53,26 +54,12 @@ export const signIn = asyncHandler(async (req, res) => {
 
 
 export const getUser = asyncHandler(async (req, res) => {
-    try {
-        const {
-            userId
-        } = req;
-
-        const user = await User.findById(userId);
-
-        if (!user) {
-            return res.status(404).json({
-                message: 'User not found'
-            });
-        }
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({
-            message: 'Internal server error'
-        });
-    }
+    const {
+        userId
+    } = req;
+    const user = await User.findById(userId);
+    res.status(201).json(user);
 });
-
 export const updateUser = asyncHandler(async (req, res, next) => {
     
     const {
@@ -133,5 +120,47 @@ export const updatePrimaryDoctor = asyncHandler(async (req, res, next) => {
         });
     } catch (error) {
         next(error);
+    }
+});
+
+
+export const getUserAppointments = asyncHandler(async (req, res) => {
+    try {
+        const {
+            id
+        } = req.params;
+
+
+
+        const appointments = await Appointment.find({
+                user: id
+            })
+            .populate('doctor', 'name')
+            .exec();
+
+        console.log('Appointments retrieved:', appointments);
+
+
+        res.json(appointments);
+    } catch (error) {
+
+        console.error('Error:', error);
+
+
+        if (error.response) {
+
+            console.error('Server Error:', error.response.data);
+        } else if (error.request) {
+
+            console.error('Request Error:', error.request);
+        } else {
+
+            console.error('Other Error:', error.message);
+        }
+
+
+        res.status(500).json({
+            error: 'Internal Server Error'
+        });
     }
 });

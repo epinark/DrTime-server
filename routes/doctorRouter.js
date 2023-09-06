@@ -7,10 +7,11 @@ import {
     getAllDoctors,
     createDoctor,
     getDoctorWorkingHours,
+    getDoctorAppointments
 } from "../controllers/doctorController.js"
 
 const doctorRouter = Router();
-doctorRouter.route('/:id').get(getOneDoctor).get(getDoctorWorkingHours);
+doctorRouter.route('/:id').get(getOneDoctor).get(getDoctorWorkingHours).get(getDoctorAppointments);
 doctorRouter.route('/').get(getAllDoctors).post(createDoctor);
 
 
