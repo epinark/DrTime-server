@@ -1,7 +1,7 @@
 import Doctor from "../models/Doctor.js";
 import asyncHandler from '../utils/asyncHandler.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
-
+import Appointment from "../models/Appointment.js";
 export const getOneDoctor = asyncHandler(async (req, res, next) => {
     try {
         const {
@@ -72,19 +72,15 @@ export const getDoctorAppointments = asyncHandler(async (req, res) => {
             id
         } = req.params;
 
-        // Veritabanından doktorun randevularını çekin ve kullanıcı bilgilerini de getirin
+
         const appointments = await Appointment.find({
                 doctor: id
             })
             .populate('user')
             .exec();
 
-        console.log('Appointments retrieved:', appointments);
-
         res.json(appointments);
     } catch (error) {
-        console.error('Error:', error);
-
         let errorMessage = 'Internal Server Error';
 
         if (error.response) {
@@ -92,7 +88,6 @@ export const getDoctorAppointments = asyncHandler(async (req, res) => {
         } else if (error.request) {
             console.error('Request Error:', error.request);
         } else {
-
             errorMessage = error.message;
         }
 
