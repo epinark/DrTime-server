@@ -92,7 +92,7 @@ export const getDoctorAppointments = asyncHandler(async (req, res) => {
         } else if (error.request) {
             console.error('Request Error:', error.request);
         } else {
-            // Daha spesifik bir hata mesajı verin
+
             errorMessage = error.message;
         }
 
