@@ -66,3 +66,38 @@ export const getDoctorWorkingHours = async (req, res, next) => {
         next(error);
     }
 };
+export const getDoctorAppointments = asyncHandler(async (req, res) => {
+    try {
+        const {
+            id
+        } = req.params;
+
+        // Veritabanından doktorun randevularını çekin ve kullanıcı bilgilerini de getirin
+        const appointments = await Appointment.find({
+                doctor: id
+            })
+            .populate('user')
+            .exec();
+
+        console.log('Appointments retrieved:', appointments);
+
+        res.json(appointments);
+    } catch (error) {
+        console.error('Error:', error);
+
+        let errorMessage = 'Internal Server Error';
+
+        if (error.response) {
+            console.error('Server Error:', error.response.data);
+        } else if (error.request) {
+            console.error('Request Error:', error.request);
+        } else {
+
+            errorMessage = error.message;
+        }
+
+        res.status(500).json({
+            error: errorMessage
+        });
+    }
+});

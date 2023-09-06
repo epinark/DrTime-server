@@ -8,6 +8,7 @@ import {
     updateUser,
     createPrimaryDoctor,
     updatePrimaryDoctor,
+    getUserAppointments,
 } from '../controllers/userController.js';
 import validateJOI from '../middleware/validateJOI.js';
 import {
@@ -37,7 +38,7 @@ authRouter.get('/me', protect, getUser);
 authRouter.put('/me', protect, updateUser);
 
 
-
+authRouter.route('/:id').get(getUserAppointments);
 
 authRouter.route('/primaryDoctor')
     .post(createPrimaryDoctor)

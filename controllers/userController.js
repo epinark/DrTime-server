@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
+import Appointment from "../models/Appointment.js";
 import {
     createJWT,
     hashPassword,
@@ -118,5 +119,47 @@ export const updatePrimaryDoctor = asyncHandler(async (req, res, next) => {
         });
     } catch (error) {
         next(error);
+    }
+});
+
+
+export const getUserAppointments = asyncHandler(async (req, res) => {
+    try {
+        const {
+            id
+        } = req.params;
+
+
+
+        const appointments = await Appointment.find({
+                user: id
+            })
+            .populate('doctor', 'name')
+            .exec();
+
+        console.log('Appointments retrieved:', appointments);
+
+
+        res.json(appointments);
+    } catch (error) {
+
+        console.error('Error:', error);
+
+
+        if (error.response) {
+
+            console.error('Server Error:', error.response.data);
+        } else if (error.request) {
+
+            console.error('Request Error:', error.request);
+        } else {
+
+            console.error('Other Error:', error.message);
+        }
+
+
+        res.status(500).json({
+            error: 'Internal Server Error'
+        });
     }
 });
