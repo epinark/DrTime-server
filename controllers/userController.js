@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import ErrorResponse from '../utils/ErrorResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
+import Appointment from "../models/Appointment.js";
 import {
     createJWT,
     hashPassword,
@@ -120,3 +121,20 @@ export const updatePrimaryDoctor = asyncHandler(async (req, res, next) => {
         next(error);
     }
 });
+
+export const getUserAppointments = async (userId) => {
+    try {
+        // MongoDB'de 'Appointment' koleksiyonundaki kullanıcıya ait randevuları sorgula
+        const appointments = await Appointment.find({
+                user: userId
+            })
+            .populate('user', 'firstName lastName') // Kullanıcı bilgilerini çek
+            .populate('doctor', 'name') // Doktor bilgilerini çek
+            .exec();
+
+        return appointments;
+    } catch (error) {
+        // Hata yönetimi
+        throw error;
+    }
+};
