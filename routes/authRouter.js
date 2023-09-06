@@ -34,7 +34,7 @@ authRouter.post('/signin', validateJOI(signinSchema), signIn);
 authRouter.get('/me', protect, getUser);
 
 
-authRouter.put('/me', updateUser);
+authRouter.put('/me/:id', updateUser);
 
 
 
