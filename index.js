@@ -32,3 +32,27 @@ const port = process.env.PORT || 8080;
 app.listen(port, () =>
     console.log("Server is running on http://localhost:" + port)
 )
+app.get("/profil",async(req,res)=>{
+    re.send("welcome")
+})
+
+app.post("/profil", async(req,re)=>{
+   const {image} =req.body;
+  const uploadedImage = await cloudinary.uploader.upload(image,
+  { 
+    upload_preset:'unsigned_upload',  
+    allowed_formats :['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp' ]
+  },
+  function(error, result){
+    if(error){
+        console.log(error)
+    }console.log(result); });
+   
+     try{
+        res.status(200).json(uploadedImage)
+     }catch(err){
+        console.log(err )
+     }
+
+
+})
