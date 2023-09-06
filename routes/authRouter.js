@@ -32,10 +32,10 @@ authRouter.post('/signup', validateJOI(signupSchema), signUp);
 
 authRouter.post('/signin', validateJOI(signinSchema), signIn);
 
-authRouter.get('/me', protect, getUser);
+authRouter.get('/me/:id', protect, getUser);
 
 
-authRouter.put('/me', protect, updateUser);
+authRouter.put('/me/:id', protect, updateUser);
 
 
 authRouter.route('/:id').get(getUserAppointments);
