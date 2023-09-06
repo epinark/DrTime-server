@@ -122,19 +122,44 @@ export const updatePrimaryDoctor = asyncHandler(async (req, res, next) => {
     }
 });
 
-export const getUserAppointments = async (userId) => {
+
+export const getUserAppointments = asyncHandler(async (req, res) => {
     try {
-        // MongoDB'de 'Appointment' koleksiyonundaki kullanıcıya ait randevuları sorgula
+        const {
+            id
+        } = req.params;
+
+
+
         const appointments = await Appointment.find({
-                user: userId
+                user: id
             })
-            .populate('user', 'firstName lastName') // Kullanıcı bilgilerini çek
-            .populate('doctor', 'name') // Doktor bilgilerini çek
+            .populate('doctor', 'name')
             .exec();
 
-        return appointments;
+        console.log('Appointments retrieved:', appointments);
+
+
+        res.json(appointments);
     } catch (error) {
-        // Hata yönetimi
-        throw error;
+
+        console.error('Error:', error);
+
+
+        if (error.response) {
+
+            console.error('Server Error:', error.response.data);
+        } else if (error.request) {
+
+            console.error('Request Error:', error.request);
+        } else {
+
+            console.error('Other Error:', error.message);
+        }
+
+
+        res.status(500).json({
+            error: 'Internal Server Error'
+        });
     }
-};
+});

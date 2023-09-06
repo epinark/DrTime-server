@@ -36,9 +36,9 @@ authRouter.get('/me', protect, getUser);
 
 
 authRouter.put('/me', protect, updateUser);
-authRouter.route('/').get(getUserAppointments);
 
 
+authRouter.route('/:id').get(getUserAppointments);
 
 authRouter.route('/primaryDoctor')
     .post(createPrimaryDoctor)
