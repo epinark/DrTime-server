@@ -61,15 +61,15 @@ export const getUser = asyncHandler(async (req, res) => {
     res.status(201).json(user);
 });
 export const updateUser = asyncHandler(async (req, res, next) => {
-    
+
     const {
         body,
         params: {
             id
         },
     } = req;
-console.log(id)
-    const updatedUser = await User.findByIdAndUpdate(id, body, {
+
+    const updatedUser = await User.findByIdAndUpdate(body.userId, body.updatedProfile, {
         new: true,
         runValidators: true,
     });
