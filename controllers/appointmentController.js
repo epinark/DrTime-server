@@ -54,7 +54,7 @@ export const createAppointment = asyncHandler(async (req, res, next) => {
 
         const [hours, minutes] = appointmenttime.split(":");
         const parsedAppointmentDate = new Date(appointmentdate);
-        parsedAppointmentDate.setHours(hours);
+        parsedAppointmentDate.setHours(parseInt(hours) + 2);
         parsedAppointmentDate.setMinutes(minutes);
 
         if (isNaN(parsedAppointmentDate)) {
