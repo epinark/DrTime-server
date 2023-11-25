@@ -52,15 +52,12 @@ export const createAppointment = asyncHandler(async (req, res, next) => {
             description
         } = req.body;
 
-        // Convert the time to UTC
         const [hours, minutes] = appointmenttime.split(":");
         const parsedAppointmentDate = new Date(appointmentdate);
-        parsedAppointmentDate.setUTCHours(hours);
-        parsedAppointmentDate.setUTCMinutes(minutes);
+        parsedAppointmentDate.setUTCHours(hours, minutes, 0, 0);
 
-        if (isNaN(parsedAppointmentDate)) {
-            throw new ErrorResponse("Invalid appointment date", 400);
-        }
+
+
 
         const newAppointment = await Appointment.create({
             user,
@@ -74,7 +71,6 @@ export const createAppointment = asyncHandler(async (req, res, next) => {
         next(error);
     }
 });
-
 
 
 
