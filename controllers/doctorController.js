@@ -66,20 +66,56 @@ export const getDoctorWorkingHours = async (req, res, next) => {
         next(error);
     }
 };
-export const getDoctorAppointments = asyncHandler(async (req, res) => {
+// export const getDoctorAppointments = asyncHandler(async (req, res) => {
+//     try {
+//         const {
+//             id
+//         } = req.params;
+
+
+//         const appointments = await Appointment.find({
+//                 doctor: id
+//             })
+//             .populate('user')
+//             .exec();
+
+//         res.json(appointments);
+//     } catch (error) {
+//         let errorMessage = 'Internal Server Error';
+
+//         if (error.response) {
+//             console.error('Server Error:', error.response.data);
+//         } else if (error.request) {
+//             console.error('Request Error:', error.request);
+//         } else {
+//             errorMessage = error.message;
+//         }
+
+//         res.status(500).json({
+//             error: errorMessage
+//         });
+//     }
+// });
+
+export const getDoctorsAppointmentsForSelectedDate = asyncHandler(async (req, res) => {
     try {
         const {
-            id
+            id,
+            date
         } = req.params;
 
 
-        const appointments = await Appointment.find({
-                doctor: id
+        const appointmentsForSelectedDate = await Appointment.find({
+                doctor: id,
+                appointmentdate: {
+                    $gte: new Date(`${date}T00:00:00.000Z`),
+                    $lt: new Date(`${date}T23:59:59.999Z`),
+                },
             })
             .populate('user')
             .exec();
 
-        res.json(appointments);
+        res.json(appointmentsForSelectedDate);
     } catch (error) {
         let errorMessage = 'Internal Server Error';
 

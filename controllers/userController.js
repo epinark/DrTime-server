@@ -130,8 +130,6 @@ export const getUserAppointments = asyncHandler(async (req, res) => {
             id
         } = req.params;
 
-
-
         const appointments = await Appointment.find({
                 user: id
             })
@@ -139,8 +137,6 @@ export const getUserAppointments = asyncHandler(async (req, res) => {
             .exec();
 
         console.log('Appointments retrieved:', appointments);
-
-
         res.json(appointments);
     } catch (error) {
 
