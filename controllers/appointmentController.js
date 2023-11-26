@@ -100,9 +100,6 @@ export const deleteAppointment = asyncHandler(async (req, res, next) => {
     const {
         id
     } = req.params;
-    const {
-        userId
-    } = req;
 
     const found = await Appointment.findById(id);
     if (!found)
@@ -113,6 +110,7 @@ export const deleteAppointment = asyncHandler(async (req, res, next) => {
     });
 
     res.json({
-        success: `Appointment with id of ${id} was deleted`
+        success: true,
+        appointmentdate: `${found.appointmentdate}`
     });
 });
